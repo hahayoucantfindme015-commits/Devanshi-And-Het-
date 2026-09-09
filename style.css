@@ -1,0 +1,1503 @@
+/* =========================================================
+   MUSEUM OF UNLIVED LIVES
+   Hogwarts-inspired magical museum interface
+   ========================================================= */
+
+
+/* ---------- ROOT ---------- */
+
+:root {
+    --ink: #e9dfc5;
+    --muted: #a99f8a;
+    --gold: #c8a96b;
+    --gold-light: #edd49a;
+    --dark-gold: #80652f;
+
+    --background: #080b12;
+    --background-two: #101522;
+    --panel: rgba(20, 24, 34, 0.82);
+
+    --border: rgba(200, 169, 107, 0.26);
+
+    --shadow:
+        0 25px 60px rgba(0, 0, 0, 0.45);
+
+    --transition:
+        450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+/* ---------- RESET ---------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    color: var(--ink);
+
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            #222b43 0%,
+            #0d111c 42%,
+            #05070c 100%
+        );
+
+    overflow-x: hidden;
+}
+
+
+/* ---------- BACKGROUND ---------- */
+
+.magic-background {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: -10;
+
+    overflow: hidden;
+}
+
+
+.stars {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.7) 1px,
+            transparent 1px
+        );
+
+    background-size: 110px 110px;
+
+    opacity: 0.22;
+}
+
+
+.fog {
+    position: absolute;
+
+    width: 65vw;
+    height: 25vw;
+
+    border-radius: 50%;
+
+    filter: blur(70px);
+
+    opacity: 0.13;
+
+    animation:
+        fogMove 14s ease-in-out infinite alternate;
+}
+
+
+.fog-one {
+    background: #6075aa;
+
+    top: 15%;
+    left: -15%;
+}
+
+
+.fog-two {
+    background: #927c4e;
+
+    bottom: 10%;
+    right: -20%;
+
+    animation-delay: -6s;
+}
+
+
+@keyframes fogMove {
+
+    from {
+        transform:
+            translate3d(-5%, 0, 0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translate3d(15%, -5%, 0)
+            scale(1.2);
+    }
+}
+
+
+/* ---------- PARTICLES ---------- */
+
+#particles {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 20;
+}
+
+
+.particle {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: rgba(237, 212, 154, 0.8);
+
+    box-shadow:
+        0 0 12px rgba(237, 212, 154, 0.6);
+
+    animation:
+        floatParticle linear infinite;
+}
+
+
+@keyframes floatParticle {
+
+    from {
+        transform:
+            translateY(100vh)
+            scale(0.3);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    to {
+        transform:
+            translateY(-10vh)
+            scale(1);
+
+        opacity: 0;
+    }
+}
+
+
+/* ---------- SCREENS ---------- */
+
+.screen {
+    min-height: 100vh;
+
+    padding: 35px 5vw;
+
+    position: relative;
+
+    transition:
+        opacity 600ms ease,
+        transform 600ms ease,
+        filter 600ms ease;
+}
+
+
+.screen.hidden {
+    display: none;
+}
+
+
+.screen.fade-out {
+    opacity: 0;
+
+    transform:
+        scale(1.025);
+
+    filter: blur(4px);
+}
+
+
+/* ---------- INTRO ---------- */
+
+#introScreen {
+    display: grid;
+
+    place-items: center;
+
+    text-align: center;
+}
+
+
+.intro-content {
+    width: min(850px, 100%);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.museum-emblem {
+    width: 80px;
+    height: 80px;
+
+    border:
+        1px solid
+        var(--border);
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    color: var(--gold-light);
+
+    font-size: 32px;
+
+    margin-bottom: 34px;
+
+    box-shadow:
+        0 0 50px rgba(200, 169, 107, 0.12);
+
+    animation:
+        emblemPulse 4s ease-in-out infinite;
+}
+
+
+@keyframes emblemPulse {
+
+    50% {
+        transform: rotate(180deg);
+
+        box-shadow:
+            0 0 70px rgba(200, 169, 107, 0.22);
+    }
+}
+
+
+.eyebrow {
+    letter-spacing: 0.24em;
+
+    font-size: 11px;
+
+    color: var(--gold);
+
+    font-weight: bold;
+}
+
+
+h1,
+h2,
+h3 {
+    font-weight: 400;
+}
+
+
+.intro-content h1 {
+    margin-top: 20px;
+
+    font-size:
+        clamp(60px, 9vw, 125px);
+
+    line-height: 0.9;
+
+    letter-spacing: -0.055em;
+
+    text-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.55);
+}
+
+
+.intro-content h1 span {
+    color: var(--gold-light);
+
+    font-style: italic;
+}
+
+
+.intro-description {
+    max-width: 610px;
+
+    margin-top: 35px;
+
+    color: var(--muted);
+
+    font-size:
+        clamp(16px, 2vw, 21px);
+
+    line-height: 1.8;
+}
+
+
+.wax-seal {
+    width: 56px;
+    height: 56px;
+
+    border-radius: 50%;
+
+    margin: 32px 0;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 23px;
+
+    color: #e6c982;
+
+    background:
+        radial-gradient(
+            circle,
+            #684c34,
+            #321e19
+        );
+
+    border:
+        1px solid
+        rgba(237, 212, 154, 0.25);
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,0.5);
+}
+
+
+.small-note {
+    margin-top: 18px;
+
+    color: #716b5f;
+
+    font-size: 12px;
+}
+
+
+/* ---------- BUTTON ---------- */
+
+.magic-button {
+    position: relative;
+
+    border:
+        1px solid
+        rgba(237, 212, 154, 0.45);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(101, 77, 36, 0.6),
+            rgba(52, 41, 27, 0.9)
+        );
+
+    color: var(--gold-light);
+
+    padding:
+        17px 30px;
+
+    min-width: 220px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    letter-spacing: 0.09em;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+}
+
+
+.magic-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    transform:
+        skewX(-25deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.14),
+            transparent
+        );
+
+    transition:
+        left 700ms ease;
+}
+
+
+.magic-button:hover::before {
+    left: 140%;
+}
+
+
+.magic-button:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--gold-light);
+
+    box-shadow:
+        0 12px 35px
+        rgba(200, 169, 107, 0.18);
+}
+
+
+/* ---------- CREATION ---------- */
+
+#creationScreen {
+    display: grid;
+
+    place-items: center;
+}
+
+
+.creation-container {
+    width: min(960px, 100%);
+
+    padding:
+        clamp(25px, 5vw, 65px);
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20, 25, 38, 0.93),
+            rgba(9, 12, 19, 0.91)
+        );
+
+    box-shadow: var(--shadow);
+}
+
+
+.creation-container h2 {
+    margin-top: 15px;
+
+    font-size:
+        clamp(38px, 6vw, 64px);
+
+    color: var(--gold-light);
+}
+
+
+.section-description {
+    max-width: 680px;
+
+    margin-top: 16px;
+
+    color: var(--muted);
+
+    line-height: 1.8;
+}
+
+
+.form-grid {
+    margin:
+        45px 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 30px;
+}
+
+
+.form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+
+label {
+    font-size: 12px;
+
+    color: var(--gold);
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+}
+
+
+input,
+select {
+    width: 100%;
+
+    padding: 17px;
+
+    border:
+        1px solid
+        rgba(200, 169, 107, 0.25);
+
+    background:
+        rgba(5, 8, 14, 0.7);
+
+    color: var(--ink);
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    transition:
+        border-color 250ms ease,
+        box-shadow 250ms ease;
+}
+
+
+input:focus,
+select:focus {
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        0 0 25px
+        rgba(200, 169, 107, 0.08);
+}
+
+
+.choice-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+
+.choice-card {
+    min-height: 160px;
+
+    padding: 22px 16px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    color: var(--ink);
+
+    border:
+        1px solid
+        rgba(200, 169, 107, 0.19);
+
+    background:
+        rgba(9, 12, 18, 0.6);
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    transition:
+        transform 300ms ease,
+        border-color 300ms ease,
+        background 300ms ease;
+}
+
+
+.choice-card:hover {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(200, 169, 107, 0.5);
+}
+
+
+.choice-card.selected {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(100, 79, 40, 0.32),
+            rgba(12, 15, 23, 0.85)
+        );
+
+    border-color:
+        var(--gold);
+
+    box-shadow:
+        inset
+        0 0 30px
+        rgba(200, 169, 107, 0.06);
+}
+
+
+.choice-card span {
+    color: var(--gold-light);
+
+    font-size: 25px;
+}
+
+
+.choice-card strong {
+    font-size: 17px;
+
+    font-weight: 400;
+}
+
+
+.choice-card small {
+    color: var(--muted);
+
+    line-height: 1.5;
+}
+
+
+/* ---------- HEADER ---------- */
+
+#museumScreen {
+    padding:
+        0 5vw 30px;
+
+    transition:
+        background 1.5s ease;
+}
+
+
+.museum-header {
+    height: 90px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid
+        rgba(200, 169, 107, 0.11);
+}
+
+
+.museum-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+
+.brand-symbol {
+    width: 36px;
+    height: 36px;
+
+    border:
+        1px solid
+        var(--border);
+
+    display: grid;
+
+    place-items: center;
+
+    color: var(--gold-light);
+}
+
+
+.museum-brand span {
+    display: block;
+
+    font-size: 9px;
+
+    letter-spacing: 0.23em;
+
+    color: var(--muted);
+}
+
+
+.museum-brand strong {
+    font-size: 14px;
+
+    font-weight: 400;
+
+    letter-spacing: 0.1em;
+}
+
+
+.visitor-information {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+.restart-button {
+    color: var(--gold);
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    transition:
+        color 200ms ease;
+}
+
+
+.restart-button:hover {
+    color: var(--gold-light);
+}
+
+
+/* ---------- TIMELINE ---------- */
+
+.timeline-section {
+    max-width: 1250px;
+
+    margin:
+        45px auto 0;
+}
+
+
+.timeline-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+}
+
+
+.timeline-heading h2 {
+    margin-top: 10px;
+
+    font-size:
+        clamp(30px, 5vw, 52px);
+}
+
+
+.current-age {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-end;
+}
+
+
+.current-age span {
+    color: var(--muted);
+
+    font-size: 10px;
+
+    letter-spacing: 0.2em;
+}
+
+
+.current-age strong {
+    color: var(--gold-light);
+
+    font-size: 48px;
+
+    font-weight: 400;
+}
+
+
+.timeline-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-top: 35px;
+}
+
+
+.timeline {
+    flex: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+
+    position: relative;
+}
+
+
+.timeline::before {
+    content: "";
+
+    position: absolute;
+
+    left: 4%;
+    right: 4%;
+
+    top: 15px;
+
+    height: 1px;
+
+    background:
+        rgba(200, 169, 107, 0.25);
+}
+
+
+.timeline-item {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+    z-index: 1;
+}
+
+
+.timeline-orb {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(200, 169, 107, 0.35);
+
+    background:
+        #0b0e16;
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 9px;
+
+    color: var(--muted);
+
+    transition:
+        all 350ms ease;
+}
+
+
+.timeline-item:hover .timeline-orb {
+    transform:
+        scale(1.2);
+
+    border-color:
+        var(--gold);
+}
+
+
+.timeline-item.active .timeline-orb {
+    transform:
+        scale(1.35);
+
+    color:
+        #080b12;
+
+    background:
+        var(--gold-light);
+
+    border-color:
+        var(--gold-light);
+
+    box-shadow:
+        0 0 25px
+        rgba(237, 212, 154, 0.35);
+}
+
+
+.timeline-item.visited .timeline-orb {
+    border-color:
+        var(--gold);
+}
+
+
+.timeline-age {
+    font-size: 11px;
+
+    color: var(--muted);
+}
+
+
+.timeline-arrow {
+    width: 38px;
+    height: 38px;
+
+    flex: 0 0 auto;
+
+    color: var(--gold);
+
+    border:
+        1px solid
+        rgba(200, 169, 107, 0.25);
+
+    background:
+        rgba(10, 13, 20, 0.8);
+
+    cursor: pointer;
+
+    transition:
+        border-color 200ms ease,
+        transform 200ms ease;
+}
+
+
+.timeline-arrow:hover {
+    border-color:
+        var(--gold);
+
+    transform:
+        scale(1.05);
+}
+
+
+/* ---------- ROOM ---------- */
+
+.room-container {
+    max-width: 1250px;
+
+    margin:
+        70px auto 0;
+}
+
+
+.room-door {
+    text-align: center;
+
+    position: relative;
+
+    padding:
+        60px 20px;
+
+    margin-bottom: 45px;
+}
+
+
+.room-door::before,
+.room-door::after {
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 1px;
+
+    top: 50%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(200,169,107,0.3)
+        );
+}
+
+
+.room-door::before {
+    left: 0;
+}
+
+
+.room-door::after {
+    right: 0;
+
+    transform:
+        rotate(180deg);
+}
+
+
+.door-top {
+    color:
+        var(--gold-light);
+
+    font-size: 24px;
+
+    margin-bottom: 12px;
+}
+
+
+#roomNumber {
+    color:
+        var(--gold);
+
+    font-size: 11px;
+
+    letter-spacing:
+        0.3em;
+}
+
+
+#roomTitle {
+    margin-top: 12px;
+
+    font-size:
+        clamp(40px, 7vw, 76px);
+
+    color:
+        var(--gold-light);
+
+    text-shadow:
+        0 12px 40px rgba(0,0,0,0.45);
+}
+
+
+#roomSubtitle {
+    max-width: 680px;
+
+    margin:
+        14px auto 0;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.8;
+
+    font-style:
+        italic;
+}
+
+
+/* ---------- MUSEUM CARDS ---------- */
+
+.room-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+
+.museum-card {
+    position: relative;
+
+    padding:
+        28px;
+
+    min-height:
+        200px;
+
+    display: flex;
+
+    gap: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 27, 39, 0.88),
+            rgba(9, 12, 19, 0.85)
+        );
+
+    border:
+        1px solid
+        rgba(200,169,107,0.16);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,0.18);
+
+    transition:
+        transform 400ms ease,
+        border-color 400ms ease,
+        box-shadow 400ms ease;
+}
+
+
+.museum-card:hover {
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(200,169,107,0.35);
+
+    box-shadow:
+        0 22px 50px
+        rgba(0,0,0,0.3);
+}
+
+
+.memory-card {
+    grid-row: span 2;
+}
+
+
+.decision-card {
+    grid-column: 1 / -1;
+
+    min-height: 165px;
+}
+
+
+.card-icon {
+    flex: 0 0 auto;
+
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(200,169,107,0.22);
+
+    color:
+        var(--gold-light);
+
+    background:
+        rgba(200,169,107,0.04);
+
+    font-size: 17px;
+}
+
+
+.card-label {
+    color:
+        var(--gold);
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.2em;
+}
+
+
+.museum-card h3 {
+    margin:
+        10px 0 12px;
+
+    font-size:
+        26px;
+
+    color:
+        var(--gold-light);
+}
+
+
+.museum-card p:not(.card-label) {
+    color:
+        var(--muted);
+
+    line-height:
+        1.8;
+
+    font-size:
+        14px;
+}
+
+
+/* ---------- CURATOR ---------- */
+
+.curator-note {
+    margin-top:
+        18px;
+
+    display: flex;
+
+    gap: 20px;
+
+    align-items: center;
+
+    padding:
+        28px;
+
+    border:
+        1px solid
+        rgba(200,169,107,0.18);
+
+    background:
+        rgba(13,16,24,0.65);
+}
+
+
+.note-seal {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    display: grid;
+
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    color:
+        var(--gold-light);
+
+    border:
+        1px solid
+        rgba(200,169,107,0.25);
+}
+
+
+#curatorText {
+    margin-top: 8px;
+
+    color:
+        var(--muted);
+
+    line-height:
+        1.8;
+
+    font-size:
+        14px;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+.museum-footer {
+    max-width:
+        1250px;
+
+    margin:
+        45px auto 0;
+
+    padding-top:
+        20px;
+
+    border-top:
+        1px solid
+        rgba(200,169,107,0.1);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color:
+        #6f695a;
+
+    font-size:
+        9px;
+
+    letter-spacing:
+        0.2em;
+}
+
+
+/* ---------- ROOM TRANSITION ---------- */
+
+.room-transition {
+    animation:
+        roomReveal 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+@keyframes roomReveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(0.98);
+
+        filter:
+            blur(5px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+        filter:
+            blur(0);
+    }
+}
+
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 900px) {
+
+    .choice-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .form-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+
+    .room-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .memory-card,
+    .decision-card {
+        grid-row: auto;
+        grid-column: auto;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .screen {
+        padding:
+            22px 20px;
+    }
+
+
+    #museumScreen {
+        padding:
+            0 20px 25px;
+    }
+
+
+    .museum-header {
+        height: 75px;
+    }
+
+
+    .visitor-information span {
+        display: none;
+    }
+
+
+    .choice-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .timeline-heading {
+        align-items: center;
+    }
+
+
+    .timeline-heading h2 {
+        font-size: 30px;
+    }
+
+
+    .timeline-wrapper {
+        gap: 5px;
+    }
+
+
+    .timeline {
+        overflow: hidden;
+    }
+
+
+    .timeline::before {
+        left: 0;
+        right: 0;
+    }
+
+
+    .timeline-orb {
+        width: 25px;
+        height: 25px;
+    }
+
+
+    .timeline-age {
+        font-size: 9px;
+    }
+
+
+    .room-door {
+        padding:
+            35px 0;
+    }
+
+
+    .room-door::before,
+    .room-door::after {
+        display: none;
+    }
+
+
+    .museum-card {
+        padding: 20px;
+    }
+
+
+    .museum-card h3 {
+        font-size: 22px;
+    }
+
+
+    .curator-note {
+        align-items: flex-start;
+    }
+
+}
